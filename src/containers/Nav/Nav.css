@@ -1,0 +1,49 @@
+nav,
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    background-color: rgb(220, 243, 243);
+    padding: 10px;
+    background-color: #3498db;
+    width: 100%;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+}
+
+nav h4 {
+    color: white;
+    font-size: clamp(20px, 2vw, 30px);
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+nav div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    padding: 0;
+}
+
+nav .nav-items {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    margin: 0 0 0 0;
+}
+
+li {
+    list-style-type: none;
+    padding: 10px;
+    font-size: clamp(20px, 1.5vw, 40px);
+}

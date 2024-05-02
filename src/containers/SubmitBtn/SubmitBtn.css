@@ -1,0 +1,24 @@
+.button-div{
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+button {
+    vertical-align: middle;
+    width: max-content;
+}
+
+button>label {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    vertical-align: middle;
+}
+
+.button-div > input {
+    visibility:hidden;
+}
