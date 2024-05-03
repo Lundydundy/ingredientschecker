@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Nav from './containers/Nav/Nav'
 import ImgContainer from './containers/ImgContainer/ImgContainer'
 import SubmitBtn from './containers/SubmitBtn/SubmitBtn'
-import { useOpenCv } from "opencv-react"
+import cv from "opencv-ts"
 
 
 
@@ -11,7 +11,6 @@ function App() {
   const [imgSrc, setImgSrc]: any = useState(null)
   const [allergies, setAllergies]: any = useState(["wheat", "barley", "rye", "gluten", "milk"])
 
-  const { cv } = useOpenCv();
   
   useEffect(() => {
     if (cv) {
