@@ -46,10 +46,10 @@ function retrieveFoundAllergens(result, trie) {
     const found = new Set();
     const boxes = [];
 
-    for (let i = 0; i < result.data.words.length; i++) {
-        const word = result.data.words[i].text.toLowerCase()
+    for (let i = 0; i < result.length; i++) {
+        const word = result[i].text.toLowerCase()
         if (trie.search(word)) {
-            boxes.push(result.data.words[i].bbox);
+            boxes.push(result[i].bbox);
             found.add(word);
         }
     }
@@ -63,24 +63,15 @@ function retrieveFoundAllergens(result, trie) {
 
 let trie = {}
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, 'images/')
-    },
-    filename: (req, file, cb) => {
-      cb(null, file.originalname)
-    },
-  })
-  
-const upload = multer({ storage: storage })
 
 const app = express()
 
 app.use(cors({
-    origin: "https://ingredientschecker.vercel.app"
+    origin: "https://ingredientschecker.vercel.app",
 }));
 
-app.use(express.json());
+app.use(express.json({limit: '200mb'}));
+
 
 app.use((req, res, next) => {
 
@@ -97,9 +88,9 @@ app.post("/", (req, res) => {
 
 app.post("/processimg", async (req, res) => {
 
-    console.log("req.body:", req.body)
+    const result = req.body.result
  
-    const final = retrieveFoundAllergens(req.body, trie)
+    const final = retrieveFoundAllergens(result, trie)
     console.log(final.found)
     res.json({ success: true, result: {words: final.found, boxes: final.boxes} });
 })

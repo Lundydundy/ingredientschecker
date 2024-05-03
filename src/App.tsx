@@ -7,7 +7,7 @@ import { createWorker } from 'tesseract.js';
 
 
 function App() {
-  const [allergy, setAllergy]: any = useState("Take a picture of ingredients to see if allergens are present");
+  const [allergy, setAllergy]: any = useState(["Take a picture of ingredients to see if allergens are present"]);
   const [imgSrc, setImgSrc]: any = useState(null)
   const [allergies, setAllergies]: any = useState(["wheat", "barley", "rye", "gluten", "milk"])
 
@@ -47,8 +47,6 @@ function App() {
       return;
     }
 
-    const form = new FormData();
-    form.append("file", selectedImage);
     const imgURL = URL.createObjectURL(selectedImage)
     const imgElement = new Image()
     imgElement.src = imgURL;
@@ -61,11 +59,14 @@ function App() {
 
     cv.imshow("canvas", cv.imread(imgElement))
 
-    const worker = await createWorker('eng');
+    const worker = await createWorker('eng', 1);
+    worker.setParameters({tessedit_char_blacklist: '0123456789!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'})
 
-    const result = await worker.recognize(imgURL) 
+    const canvas: any  = document.getElementById('canvas')
 
-    console.log(result);
+    const result = await worker.recognize(canvas) 
+
+    console.log(result.data.words);
 
 
     try {
@@ -74,7 +75,10 @@ function App() {
       if(result){
         const response = await fetch('https://ingredientschecker.onrender.com/processimg', {
           method: "POST",
-          body: JSON.stringify({result: result}),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({result: result.data.words}),
         });
 
       
