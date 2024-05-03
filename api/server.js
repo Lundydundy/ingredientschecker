@@ -101,9 +101,8 @@ app.post("/", (req, res) => {
 app.post("/processimg", upload.single('file'), async (req, res) => {
 
     const worker = await createWorker('eng');
-    const image = new Image(`./images/${req.file.originalname}`)
 
-    const result = await worker.recognize(image, {
+    const result = await worker.recognize(`${req.file.originalname}`, {
         tessedit_char_blacklist: '0123456789!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~', // Ignore numbers and special characters
         oem: 1
     })
