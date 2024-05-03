@@ -48,10 +48,11 @@ function App() {
     }
 
     const form = new FormData();
-    form.append("file", selectedImage);
     const imgURL = URL.createObjectURL(selectedImage)
     const imgElement = new Image()
     imgElement.src = imgURL;
+    const cvImg = cv.imread(imgElement)
+    form.append("file", cvImg);
     setImgSrc(imgURL)
 
     await new Promise((resolve, reject) => {
