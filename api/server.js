@@ -98,29 +98,12 @@ app.post("/", (req, res) => {
     res.json({ trie: trie })
 })
 
-app.post("/processimg", upload.single("file"), async (req, res) => {
-
-    const worker = await createWorker('eng');
-    
-
-    const result = await worker.recognize(req.file, {
-        tessedit_char_blacklist: '0123456789!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~', // Ignore numbers and special characters
-        oem: 1
-    })
-
-    
+app.post("/processimg", async (req, res) => {
+ 
     const final = retrieveFoundAllergens(result, trie)
 
     console.log(final.found)
     worker.terminate();
-    
-    // fs.unlink(`./images/${req.file.originalname}`, (err) => {
-    //     if (err) {
-    //         console.error(err)
-    //         return
-    //     }
-    //     console.log(`successfully deleted ${req.file.originalname}`)
-    // })
     res.json({ success: true, result: {words: final.found, boxes: final.boxes} });
 })
 

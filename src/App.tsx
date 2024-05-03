@@ -4,6 +4,8 @@ import ImgContainer from './containers/ImgContainer/ImgContainer'
 import SubmitBtn from './containers/SubmitBtn/SubmitBtn'
 import cv from "opencv-ts"
 
+const Tesseract = require("tesseract.js");
+const { createWorker } = Tesseract;
 
 
 function App() {
@@ -60,14 +62,21 @@ function App() {
     })
 
     cv.imshow("canvas", cv.imread(imgElement))
-  
+
+    const worker = await createWorker('eng');
+
+    const result = await worker.recognize(imgElement, {
+      tessedit_char_blacklist: '0123456789!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~', // Ignore numbers and special characters
+      oem: 1
+  })
+
 
     try {
       // Send image to backend
       console.log("sending")
       const response = await fetch('https://ingredientschecker.onrender.com/processimg', {
         method: "POST",
-        body: form,
+        body: result,
       });
 
       if (response.ok) {
