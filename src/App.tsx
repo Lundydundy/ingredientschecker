@@ -76,7 +76,7 @@ function App() {
       console.log("sending")
       const response = await fetch('https://ingredientschecker.onrender.com/processimg', {
         method: "POST",
-        body: result,
+        body: JSON.stringify({result: result}),
       });
 
       if (response.ok) {
