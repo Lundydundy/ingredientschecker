@@ -4,9 +4,6 @@ const express = require('express');
 const cors = require('cors')
 const multer = require('multer')
 
-const Tesseract = require("tesseract.js");
-const { createWorker } = Tesseract;
-
 class Trie {
     constructor() {
         this.children = {};
