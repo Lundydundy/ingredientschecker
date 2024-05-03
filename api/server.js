@@ -103,7 +103,6 @@ app.post("/processimg", async (req, res) => {
     const final = retrieveFoundAllergens(result, trie)
 
     console.log(final.found)
-    worker.terminate();
     res.json({ success: true, result: {words: final.found, boxes: final.boxes} });
 })
 
