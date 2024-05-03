@@ -23,7 +23,7 @@ function App() {
 
   useEffect(() => {
     if (allergies.length) {
-      fetch("https://ingredientschecker-o66g.vercel.app/", {
+      fetch("https://ingredientschecker.onrender.com/", {
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ function App() {
     try {
       // Send image to backend
       console.log("sending")
-      const response = await fetch('https://ingredientschecker-o66g.vercel.app/processimg', {
+      const response = await fetch('https://ingredientschecker.onrender.com/processimg', {
         method: "POST",
         body: form,
       });
