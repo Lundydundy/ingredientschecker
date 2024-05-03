@@ -3,8 +3,8 @@ import Nav from './containers/Nav/Nav'
 import ImgContainer from './containers/ImgContainer/ImgContainer'
 import SubmitBtn from './containers/SubmitBtn/SubmitBtn'
 import cv from "opencv-ts"
+import Tesseract from 'tesseract.js'
 
-const Tesseract = require("tesseract.js");
 const { createWorker } = Tesseract;
 
 
