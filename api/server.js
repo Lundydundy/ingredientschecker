@@ -98,7 +98,7 @@ app.post("/", (req, res) => {
     res.json({ trie: trie })
 })
 
-app.post("/processimg", async (req, res) => {
+app.post("/processimg", upload.single("file"), async (req, res) => {
 
     const worker = await createWorker('eng');
     
