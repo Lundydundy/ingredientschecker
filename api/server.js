@@ -114,13 +114,13 @@ app.post("/processimg", async (req, res) => {
     console.log(final.found)
     worker.terminate();
     
-    fs.unlink(`./images/${req.file.originalname}`, (err) => {
-        if (err) {
-            console.error(err)
-            return
-        }
-        console.log(`successfully deleted ${req.file.originalname}`)
-    })
+    // fs.unlink(`./images/${req.file.originalname}`, (err) => {
+    //     if (err) {
+    //         console.error(err)
+    //         return
+    //     }
+    //     console.log(`successfully deleted ${req.file.originalname}`)
+    // })
     res.json({ success: true, result: {words: final.found, boxes: final.boxes} });
 })
 
