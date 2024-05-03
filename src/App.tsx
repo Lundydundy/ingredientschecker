@@ -23,7 +23,7 @@ function App() {
 
   useEffect(() => {
     if (allergies.length) {
-      fetch("http://localhost:3000/", {
+      fetch("https://ingredientschecker-o66g.vercel.app/", {
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
