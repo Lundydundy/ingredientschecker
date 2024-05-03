@@ -65,14 +65,19 @@ function App() {
 
     const result = await worker.recognize(imgURL) 
 
+    console.log(result);
+
 
     try {
       // Send image to backend
       console.log("sending")
-      const response = await fetch('https://ingredientschecker.onrender.com/processimg', {
-        method: "POST",
-        body: JSON.stringify({result: result}),
-      });
+      if(result){
+        const response = await fetch('https://ingredientschecker.onrender.com/processimg', {
+          method: "POST",
+          body: JSON.stringify({result: result}),
+        });
+
+      
 
       if (response.ok) {
         // Image uploaded successfully
@@ -99,7 +104,7 @@ function App() {
       }
 
       cv.imshow("canvas", cvimg);
-
+    }
 
     } catch (error) {
       // Handle fetch error
