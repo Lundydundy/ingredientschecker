@@ -3,9 +3,7 @@ import Nav from './containers/Nav/Nav'
 import ImgContainer from './containers/ImgContainer/ImgContainer'
 import SubmitBtn from './containers/SubmitBtn/SubmitBtn'
 import cv from "opencv-ts"
-import Tesseract from 'tesseract.js'
-
-const { createWorker } = Tesseract;
+import { createWorker } from 'tesseract.js';
 
 
 function App() {
@@ -65,10 +63,7 @@ function App() {
 
     const worker = await createWorker('eng');
 
-    const result = await worker.recognize(imgElement, {
-      tessedit_char_blacklist: '0123456789!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~', // Ignore numbers and special characters
-      oem: 1
-  })
+    const result = await worker.recognize(imgURL) 
 
 
     try {
