@@ -65,7 +65,7 @@ function App() {
     try {
       // Send image to backend
       console.log("sending")
-      const response = await fetch('http://localhost:3000/processimg', {
+      const response = await fetch('https://ingredientschecker-o66g.vercel.app/imgprocess', {
         method: "POST",
         body: form,
       });
