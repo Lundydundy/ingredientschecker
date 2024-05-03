@@ -16,6 +16,7 @@ function App() {
     if (cv) {
       // You can use cv here, for example:
       console.log('OpenCV library loaded:', cv);
+      setAllergies(["wheat", "barley", "rye", "gluten", "milk"])
     }
   }, [cv]);
  
@@ -51,6 +52,7 @@ function App() {
     const imgURL = URL.createObjectURL(selectedImage)
     const imgElement = new Image()
     imgElement.src = imgURL;
+    setImgSrc(imgURL)
 
     await new Promise((resolve, reject) => {
       imgElement.onload = resolve;
@@ -79,6 +81,8 @@ function App() {
 
       const data = await response.json();
       console.log(data.result);
+
+      setAllergy(data.result.found)
       
       let cvimg = await cv.imread(imgElement);
 
