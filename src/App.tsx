@@ -64,7 +64,7 @@ function App() {
 
     const canvas: any  = document.getElementById('canvas')
 
-    const result = await worker.recognize(canvas) 
+    const result = await worker.recognize(imgElement) 
 
     console.log(result.data.words);
 
