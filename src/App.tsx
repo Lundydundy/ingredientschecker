@@ -62,7 +62,7 @@ function App() {
     const worker = await createWorker('eng', 1);
     worker.setParameters({tessedit_char_blacklist: '0123456789!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'})
 
-    const canvas: any  = document.getElementById('canvas')
+    //const canvas: any  = document.getElementById('canvas')
 
     const result = await worker.recognize(imgElement) 
 
