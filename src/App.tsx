@@ -3,7 +3,6 @@ import Nav from './containers/Nav/Nav'
 import ImgContainer from './containers/ImgContainer/ImgContainer'
 import SubmitBtn from './containers/SubmitBtn/SubmitBtn'
 import cv from "opencv-ts"
-import { createWorker } from 'tesseract.js';
 
 
 function App() {
@@ -23,7 +22,7 @@ function App() {
 
   useEffect(() => {
     if (allergies.length) {
-      fetch("https://ingredientschecker.onrender.com/", {
+      fetch("http://localhost:3000/", {
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
@@ -50,7 +49,10 @@ function App() {
     const imgURL = URL.createObjectURL(selectedImage)
     const imgElement = new Image()
     imgElement.src = imgURL;
-    setImgSrc(imgURL)
+    await setImgSrc(imgURL)
+
+    const form = new FormData()
+    form.append('image', e.target.files[0])
 
     await new Promise((resolve, reject) => {
       imgElement.onload = resolve;
@@ -59,28 +61,14 @@ function App() {
 
     cv.imshow("canvas", cv.imread(imgElement))
 
-    const worker = await createWorker('eng', 1);
-    worker.setParameters({tessedit_char_blacklist: '0123456789!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'})
-
-
-    const result = await worker.recognize(imgElement) 
-
-    console.log(result.data.words);
-
-
     try {
       // Send image to backend
       console.log("sending")
-      if(result){
-        const response = await fetch('https://ingredientschecker.onrender.com/processimg', {
+    
+        const response = await fetch('http://localhost:3000/test', {
           method: "POST",
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({result: result.data.words}),
+          body: form,
         });
-
-      
 
       if (response.ok) {
         // Image uploaded successfully
@@ -92,14 +80,14 @@ function App() {
       }
 
       const data = await response.json();
-      console.log(data.result);
+      console.log(data);
 
-      await setAllergy(data.result.words)
+      await setAllergy(data.found)
 
       
       let cvimg = cv.imread(imgElement);
 
-      for await (const box of data.result.boxes) {
+      for await (const box of data.boxes) {
         const x0 = box.x0, y0 = box.y0, x1 = box.x1, y1 = box.y1;
         const point1 = new cv.Point(x0 - 5, y0 - 5);
         const point2 = new cv.Point(x1, y1);
@@ -108,7 +96,7 @@ function App() {
       }
 
       cv.imshow("canvas", cvimg);
-    }
+    
 
     } catch (error) {
       // Handle fetch error

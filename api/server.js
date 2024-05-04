@@ -1,5 +1,11 @@
 const express = require('express');
 const cors = require('cors')
+const tesseract = require("tesseract.js")
+const multer = require('multer');
+
+const storage = multer.memoryStorage(); // Store files in memory
+const upload = multer({ storage: storage });
+
 
 class Trie {
     constructor() {
@@ -64,7 +70,7 @@ let trie = {}
 const app = express()
 
 app.use(cors({
-    origin: "https://ingredientschecker.vercel.app",
+    origin: "https://ingredientschecker.vercel.app"
 }));
 
 app.use(express.json({limit: '2000mb'}));
@@ -90,6 +96,35 @@ app.post("/processimg", async (req, res) => {
     const final = retrieveFoundAllergens(result, trie)
     console.log(final.found)
     res.json({ success: true, result: {words: final.found, boxes: final.boxes} });
+})
+
+app.post("/test", upload.single('image'), async (req, res) => {
+
+    
+    const imageBuffer = req.file.buffer;
+    
+    const config = {
+        lang: "eng",
+        oem: 1,
+        psm: 3
+    }
+
+    const worker = await tesseract.createWorker("eng", 1)
+    worker.setParameters({tessedit_char_blacklist: '0123456789!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'})
+
+    worker
+    .recognize(imageBuffer, config)
+  .then((text) => {
+
+    const result = retrieveFoundAllergens(text.data.words, trie)
+    res.json(result)
+  })
+  .catch((error) => {
+    console.log("error message: ",error.message)
+    res.send(error)
+  })
+    
+    
 })
 
 const PORT = process.env.PORT || 3000
