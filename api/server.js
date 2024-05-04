@@ -64,7 +64,7 @@ let trie = {}
 const app = express()
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "https://ingredientschecker.vercel.app",
 }));
 
 app.use(express.json({limit: '2000mb'}));
