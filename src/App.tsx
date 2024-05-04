@@ -62,9 +62,9 @@ function App() {
     const worker = await createWorker('eng', 1);
     worker.setParameters({tessedit_char_blacklist: '0123456789!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'})
 
-    //const canvas: any  = document.getElementById('canvas')
+    const canvas: any  = document.getElementById('canvas')
 
-    const result = await worker.recognize(imgElement) 
+    const result = await worker.recognize(canvas) 
 
     console.log(result.data.words);
 
@@ -96,6 +96,7 @@ function App() {
       console.log(data.result);
 
       await setAllergy(data.result.words)
+
       
       let cvimg = cv.imread(imgElement);
 
