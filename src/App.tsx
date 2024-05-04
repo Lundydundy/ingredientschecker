@@ -10,7 +10,7 @@ function App() {
   const [imgSrc, setImgSrc]: any = useState(null)
   const [allergies, setAllergies]: any = useState(["wheat", "barley", "rye", "gluten", "milk"])
 
-  
+
   useEffect(() => {
     if (cv) {
       // You can use cv here, for example:
@@ -18,11 +18,13 @@ function App() {
       setAllergies(["wheat", "barley", "rye", "gluten", "milk"])
     }
   }, [cv]);
- 
+
 
   useEffect(() => {
     if (allergies.length) {
       fetch("https://ingredientschecker.onrender.com/", {
+        // fetch("http://localhost:3000/", {
+
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
@@ -36,7 +38,7 @@ function App() {
     }
   }, [allergies])
 
-  const handleImage = async (e: any) => {   
+  const handleImage = async (e: any) => {
 
     const selectedImage = e.target.files[0];
 
@@ -64,11 +66,12 @@ function App() {
     try {
       // Send image to backend
       console.log("sending")
-    
-        const response = await fetch('https://ingredientschecker.onrender.com/test', {
-          method: "POST",
-          body: form,
-        });
+
+      const response = await fetch('https://ingredientschecker.onrender.com/test', {
+      // const response = await fetch("http://localhost:3000/test", {
+        method: "POST",
+        body: form,
+      });
 
       if (response.ok) {
         // Image uploaded successfully
@@ -84,7 +87,7 @@ function App() {
 
       await setAllergy(data.found)
 
-      
+
       let cvimg = cv.imread(imgElement);
 
       for await (const box of data.boxes) {
@@ -96,7 +99,7 @@ function App() {
       }
 
       cv.imshow("canvas", cvimg);
-    
+
 
     } catch (error) {
       // Handle fetch error
@@ -111,7 +114,7 @@ function App() {
       <div className='main-content'>
         <ImgContainer allergy={allergy} imgSrc={imgSrc} />
         <SubmitBtn handleImage={handleImage} />
-        <p>Checking For: {allergies.map((allergy: string, i: number) =>{
+        <p>Checking For: {allergies.map((allergy: string, i: number) => {
           return i !== allergies.length - 1 ? `${allergy.toUpperCase()}, ` : `${allergy.toUpperCase()}`
         })}</p>
       </div>

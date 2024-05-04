@@ -4,4 +4,10 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  text-align: center;
+}
+
+.main-content > p{
+  margin: auto;
+  padding: 2%;
 }
