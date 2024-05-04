@@ -111,7 +111,7 @@ function App() {
       <div className='main-content'>
         <ImgContainer allergy={allergy} imgSrc={imgSrc} />
         <SubmitBtn handleImage={handleImage} />
-        <p>{allergies.map((allergy: string, i: number) =>{
+        <p>Checking For: {allergies.map((allergy: string, i: number) =>{
           return i !== allergies.length - 1 ? `${allergy.toUpperCase()}, ` : `${allergy.toUpperCase()}`
         })}</p>
       </div>
