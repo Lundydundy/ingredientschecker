@@ -21,6 +21,7 @@ canvas {
     padding: 2rem;
     text-align: center;
     object-fit: fill;
-    max-width: 350px;
+    max-height: 450px; 
+    max-width: 400px;
     height: auto;
 }
