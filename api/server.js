@@ -67,7 +67,7 @@ app.use(cors({
     origin: "http://localhost:5173",
 }));
 
-app.use(express.json({limit: '200mb'}));
+app.use(express.json({limit: '2000mb'}));
 
 
 app.use((req, res, next) => {
