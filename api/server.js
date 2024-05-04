@@ -64,7 +64,7 @@ let trie = {}
 const app = express()
 
 app.use(cors({
-    origin: "https://ingredientschecker.vercel.app",
+    origin: "http://localhost:5173",
 }));
 
 app.use(express.json({limit: '200mb'}));
@@ -98,4 +98,4 @@ app.listen(PORT, () => {
     console.log(`app is running on port ${PORT}`)
 })
 
-module.exports = app
+module.exports = app;
